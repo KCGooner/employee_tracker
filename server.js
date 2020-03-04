@@ -1,4 +1,21 @@
 const inquirer = require("inquirer");
+const figlet = require("figlet");
+
+
+async function init() {
+    console.log(figlet.textSync('Employee', {
+      font: 'Standard',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+    }));
+    console.log(figlet.textSync('Tracker', {
+      font: 'Standard',
+      horizontalLayout: 'default',
+      verticalLayout: 'default',
+    }));
+};
+
+init();
 
 function run() {
     inquirer.prompt([{
