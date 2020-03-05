@@ -4,12 +4,12 @@ const mysql = require('mysql');
 
 async function figletText() {
     console.log(figlet.textSync('Employee', {
-      font: 'speed',
+      font: 'slant',
       horizontalLayout: 'default',
       verticalLayout: 'default',
     }));
     console.log(figlet.textSync('Tracker', {
-      font: 'speed',
+      font: 'slant',
       horizontalLayout: 'default',
       verticalLayout: 'default',
     }));
