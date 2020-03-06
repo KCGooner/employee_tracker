@@ -21,24 +21,30 @@ var connection = mysql.createConnection({
     port: 3306,
     user: "root",
     password: "Password",
-    database: "companyinfo_db"
+    database: "employee_track_db"
   });
 
   connection.connect(function(err) {
     if (err) throw err;
     // console.log('connected as id ' + connection.threadId);
+    run();
 });
 
 function run() {
-    inquirer.prompt([{
-        type: "list",
-        name: "options",
-        message: "What would you like to do?",
-        choices: ["View All Employees", "View All Employees by Department", "View All Employees by Manager",
-        "Add Employee", "Remove Employee", "Update Employee Role", "Update Employee Manager"]
-    },
-])
-
-
+  inquirer
+    .prompt({
+      type: "list",
+      name: "options",
+      message: "What would you like to do?",
+      choices: [
+        "View All Employees",
+        "View Department by Manager",
+        "View Department",
+        "View Employee by Role",
+        "Add Employee",
+        "Delete Employee",
+        "Update Employee Role",
+        "EXIT"
+      ]
+    })
 }
-run();
