@@ -73,3 +73,20 @@ function run() {
     }
   })  
 }
+
+function allEmployees() {
+  var query = "SELECT * FROM employee"
+  connection.query(query, function (err, res) {
+    if (err) throw err
+    console.table(res)
+    run()
+  })
+}
+
+function departmentView() {
+  connection.query("SELECT * FROM department", function(err, res) {
+    if (err) throw err
+    console.table(res)
+    run();
+  })
+}
