@@ -38,13 +38,38 @@ function run() {
       message: "What would you like to do?",
       choices: [
         "View All Employees",
-        "View Department by Manager",
+        "View Employees by Manager",
         "View Department",
         "View Employee by Role",
         "Add Employee",
         "Delete Employee",
-        "Update Employee Role",
-        "EXIT"
+        "Update Employee Role"
       ]
     })
+  .then(function (answer) {
+    console.log(answer)
+    switch (answer.action) {
+      case "View All Employees":
+        allEmployees()
+        break
+      case "View Employees by Manager":
+        departmentView()
+        break
+      case "View Department":
+        departmentSearch()
+        break
+      case "View Employee by Role":
+        roleSearch()
+        break
+      case "Add Employee":
+        addEmployee()
+        break
+      case "Delete Employee":
+        deleteEmployee()
+        break
+      case "Update Employee Role":
+        updateRole()
+        break
+    }
+  })  
 }
