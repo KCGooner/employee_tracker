@@ -37,19 +37,17 @@ function run() {
       name: "options",
       message: "What would you like to do?",
       choices: [
-        "View All Employees",
+        "View Employees",
         "View Department",
         "Update Employee Role",
         "Add Employee",
-        "Delete Employee",
-        "Exit"
-      ]
+        "Delete Employee"]
 
     })
     .then(function (answer) {
       console.log(answer)
       switch (answer.options) {
-        case "View All Employees":
+        case "View Employees":
           allEmployees()
           break;
 
@@ -60,17 +58,13 @@ function run() {
         case "Add Employee":
           addEmployee()
           break;
-        
+
         case "Delete Employee":
           deleteEmployee()
           break;
 
         case "Update Employee Role":
           employeeRole()
-          break;
-
-        case "exit":
-          connection.end()
           break;
       }
     })
@@ -110,34 +104,24 @@ function viewDepartment() {
 const addEmployee = () => {
   inquirer
     .prompt([
-      {
-        type: "input",
-        message: "First name of the new employee?",
-        name: "first_name"
-      },
-      {
-        type: "input",
-        message: "Last name of the new employee?",
-        name: "last_name"
-      },
-      {
-        type: "input",
+      { type: "input",
+        message: "First name of new employee?",
+        name: "first_name"},
+      { type: "input",
+        message: "Last name of new employee?",
+        name: "last_name"},
+      { type: "input",
         message: "Salary of new employee?",
-        name: "salary"
-      },
-      {
-        type: "number",
-        message: "Role ID of the new employee?",
-        name: "role_id"
-      },
-      {
-        type: "number",
-        message: "Manager ID of the new employee?",
-        name: "manager_id"
-      }
+        name: "salary"},
+      { type: "number",
+        message: "Role ID of new employee?",
+        name: "role_id"},
+      { type: "number",
+        message: "Manager ID of new employee?",
+        name: "manager_id"}
     ])
     .then(answer => {
-      const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE ("${answer.first_name}", "${answer.last_name}", "${answer.salary}", "${answer.role_id}", "${answer.manager_id}")`
+      const query = `INSERT INTO employee (first_name, last_name, salary, role_id, manager_id) VALUE ("${answer.first_name}", "${answer.last_name}", "${answer.salary}", "${answer.role_id}", "${answer.manager_id}")`
       connection.query(query, function (err, res) {
         if (err) throw err
         console.table(res)
@@ -148,21 +132,17 @@ const addEmployee = () => {
 
 const employeeRole = () => {
 
-  connection.query('SELECT *  FROM employee', function (err, res) {
+  connection.query('SELECT * FROM employee', function (err, res) {
     if (err) throw err
     console.table(res)
     inquirer
       .prompt([
-        {
-          type: 'Number',
+        { type: 'Number',
           message: 'ID of employee you would like to update?',
-          name: 'id'
-        },
-        {
-          type: 'number',
+          name: 'id'},
+        { type: 'number',
           message: 'What new role ID are you assigning the employee?',
-          name: 'role_id'
-        }
+          name: 'role_id'}
       ]).then(answer => {
         const query = `UPDATE employee SET role_id = "${answer.role_id}" WHERE id = ${answer.id}`
         connection.query(query, function (err, res) {
@@ -174,5 +154,32 @@ const employeeRole = () => {
   })
 }
 
+const deleteEmployee = () => {
+  inquirer
+    .prompt([
+      { type: "input",
+        message: "Employee first name?",
+        name: "first_name"},
+      { type: "input",
+        message: "Employee last name?",
+        name: "last_name"},
+      { type: "input",
+        message: "Salary of employee?",
+        name: "salary"},
+      { type: "number",
+        message: "Employee role ID?",
+        name: "role_id"},
+      { type: "number",
+        message: "Manager ID of the employee?",
+        name: "manager_id"}
+    ])
 
-
+    .then(answer => {
+      const query = `DELETE FROM employee WHERE(first_name, last_name, salary, role_id, manager_id) =("${answer.first_name}", "${answer.last_name}", "${answer.salary}", "${answer.role_id}", "${answer.manager_id}")`
+      connection.query(query, function (err, res) {
+        if (err) throw err
+        console.table(res)
+        run()
+      })
+    })
+};
