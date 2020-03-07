@@ -102,6 +102,38 @@ function viewDepartment() {
     })
 }
 
-
+const addEmployee = () => {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "First name of the new employee?",
+        name: "first_name"
+      },
+      {
+        type: "input",
+        message: "Last name of the new employee?",
+        name: "last_name"
+      },
+      {
+        type: "number",
+        message: "Role ID of the new employee?",
+        name: "role_id"
+      },
+      {
+        type: "number",
+        message: "Manager ID of the new employee?",
+        name: "manager_id"
+      }
+    ])
+    .then(answer => {
+      const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE ("${answer.first_name}", "${answer.last_name}", "${answer.role_id}", "${answer.manager_id}")`
+      connection.query(query, function (err, res) {
+        if (err) throw err
+        console.table(res)
+        run()
+      })
+    })
+}
 
 
