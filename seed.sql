@@ -16,7 +16,7 @@ VALUE   ("Supervisor", 70000, 1),
         
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUE ("James", "Hadley", 2, 4),
-	  ("Dennis", "Horn", 2, 1),
+	("Dennis", "Horn", 2, 1),
       ("Alyssa", "Mons", 3, 2),
       ("Bill", "Williams", 3, 2),
       ("Gordon", "Smith", 4, 3),
