@@ -41,6 +41,7 @@ function run() {
         "View Department",
         "Update Employee Role",
         "Add Employee",
+        "Delete Employee",
         "Exit"
       ]
 
@@ -58,6 +59,10 @@ function run() {
 
         case "Add Employee":
           addEmployee()
+          break;
+        
+        case "Delete Employee":
+          deleteEmployee()
           break;
 
         case "Update Employee Role":
@@ -116,6 +121,11 @@ const addEmployee = () => {
         name: "last_name"
       },
       {
+        type: "input",
+        message: "Salary of new employee?",
+        name: "salary"
+      },
+      {
         type: "number",
         message: "Role ID of the new employee?",
         name: "role_id"
@@ -127,7 +137,7 @@ const addEmployee = () => {
       }
     ])
     .then(answer => {
-      const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE ("${answer.first_name}", "${answer.last_name}", "${answer.role_id}", "${answer.manager_id}")`
+      const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUE ("${answer.first_name}", "${answer.last_name}", "${answer.salary}", "${answer.role_id}", "${answer.manager_id}")`
       connection.query(query, function (err, res) {
         if (err) throw err
         console.table(res)
@@ -135,5 +145,34 @@ const addEmployee = () => {
       })
     })
 }
+
+const employeeRole = () => {
+
+  connection.query('SELECT *  FROM employee', function (err, res) {
+    if (err) throw err
+    console.table(res)
+    inquirer
+      .prompt([
+        {
+          type: 'Number',
+          message: 'ID of employee you would like to update?',
+          name: 'id'
+        },
+        {
+          type: 'number',
+          message: 'What new role ID are you assigning the employee?',
+          name: 'role_id'
+        }
+      ]).then(answer => {
+        const query = `UPDATE employee SET role_id = "${answer.role_id}" WHERE id = ${answer.id}`
+        connection.query(query, function (err, res) {
+          if (err) throw err
+          console.log("Role updated.")
+          run()
+        })
+      })
+  })
+}
+
 
 
